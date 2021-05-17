@@ -30,6 +30,62 @@ Push-Location $ncPowershell
 . ./includes.ps1
 Pop-Location
 
-# Clear the runner state.
+try
+{
+    # Here's what we're going to do:
+    #
+    #   1. Pull the artifacts repo
+    #   2. Read the [setting-retention-days] file
+    #   3. List all of the files in the repo and delete any that are too old
+    #   4. Push the repo if we actually deleted anything
 
-Clear-Directory $env:GITHUB_WORKSPACE
+    Push-Location $naRoot
+
+        git pull | Out-Null
+        ThrowOnExitCode
+
+        $retentionDaysPath = [System.IO.Path]::Combine($naRoot, "setting-retention-days")
+        $retentionDays     = [int][System.IO.File]::ReadAllText($retentionDaysPath).Trim()
+        $utcNow            = [System.DateTime]::UtcNow
+        $minRetainTime     = $utcNow.Date - $(New-TimeSpan -Days $retentionDays)
+        $timestampRegex    = [regex]'^\d\d\d\d-\d\d-\d\dT\d\d_\d\d_\d\dZ.*'
+        $pushRequired      = $false
+
+        ForEach ($artifactPath in $([System.IO.Directory]::GetFiles($naRoot, "*")))
+        {
+            # Skip files that don't include a timestamp in the name
+
+            $filename = [System.IO.Path]::GetFileName($artifactPath)
+
+            if (!$timestampRegex.IsMatch($filename))
+            {
+                Continue
+            }
+
+            # Extract and parse the timestamp from the file name
+
+            $timestring = $filename.SubString(0, 20)        # Extract the "yyyy-MM-ddThh_mm_ssZ" part
+            $timeString = $timeString.Replace("_", ":")     # Convert to: "yyyy-MM-ddThh:mm:ssZ"
+            $timestamp  = [System.DateTime]::ParseExact($timeString, "yyyy-MM-ddThh:mm:ssZ", $([System.Globalization.CultureInfo]::InvariantCulture)).ToUniversalTime()
+
+            if ($timestamp -lt $minRetainTime)
+            {
+                Write-ActionOutput "*** expired: $artifactPath"
+                [System.IO.File]::Delete($artifactPath)
+                $pushRequired = $true
+            }
+        }
+
+        if ($pushRequired)
+        {
+            git push | Out-Null
+            ThrowOnExitCode
+        }
+
+    Pop-Location
+}
+catch
+{
+    Write-ActionException $_
+    exit 1
+}
