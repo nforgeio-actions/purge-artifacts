@@ -26,9 +26,9 @@ if ([System.String]::IsNullOrEmpty($ncRoot) -or ![System.IO.Directory]::Exists($
 
 $ncPowershell = [System.IO.Path]::Combine($ncRoot, "Powershell")
 
-Push-Location $ncPowershell
+Push-Location $ncPowershell | Out-Null
 . ./includes.ps1
-Pop-Location
+Pop-Location | Out-Null
 
 try
 {
@@ -39,7 +39,7 @@ try
     #   3. List all of the files in the repo and delete any that are too old
     #   4. Push the repo if we actually deleted anything
 
-    Push-Cwd $naRoot
+    Push-Cwd $naRoot | Out-Null
 
         git pull | Out-Null
         ThrowOnExitCode
@@ -82,7 +82,7 @@ try
             ThrowOnExitCode
         }
 
-    Pop-Cwd
+    Pop-Cwd | Out-Null
 }
 catch
 {
