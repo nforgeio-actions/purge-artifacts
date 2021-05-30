@@ -18,6 +18,7 @@
 #       first on the runner.
 
 $ncRoot = $env:NC_ROOT
+$naRoot = $env:NA_ROOT
 
 if ([System.String]::IsNullOrEmpty($ncRoot) -or ![System.IO.Directory]::Exists($ncRoot))
 {
