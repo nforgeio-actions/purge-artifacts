@@ -78,7 +78,7 @@ try
         }
 
         Write-Info "------------------------------"
-        Write-Info "$artifactsPurged purged"
+        Write-Info "$artifactsPurged artifacts purged"
 
         if ($artifactsPurged -gt 0)
         {
