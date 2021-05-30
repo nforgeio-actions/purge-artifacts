@@ -50,7 +50,7 @@ try
         $utcNow            = [System.DateTime]::UtcNow
         $minRetainTime     = $utcNow.Date - $(New-TimeSpan -Days $retentionDays)
         $timestampRegex    = [regex]'^\d\d\d\d-\d\d-\d\dT\d\d_\d\d_\d\dZ.*'
-        $pushRequired      = $false
+        $artifactsPurged   = 0
 
         ForEach ($artifactPath in $([System.IO.Directory]::GetFiles($naRoot, "*")))
         {
@@ -71,13 +71,16 @@ try
 
             if ($timestamp -lt $minRetainTime)
             {
-                Write-ActionOutput "*** expired: $artifactPath"
+                Write-ActionOutput "purging: $artifactPath"
                 [System.IO.File]::Delete($artifactPath)
-                $pushRequired = $true
+                $artifactsPurged++
             }
         }
 
-        if ($pushRequired)
+        Write-Info "------------------------------"
+        Write-Info "$artifactsPurged purged"
+
+        if ($artifactsPurged -gt 0)
         {
             git push | Out-Null
             ThrowOnExitCode
