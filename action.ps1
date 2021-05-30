@@ -52,7 +52,7 @@ try
         $timestampRegex    = [regex]'^\d\d\d\d-\d\d-\d\dT\d\d_\d\d_\d\dZ.*'
         $artifactsPurged   = 0
 
-        ForEach ($artifactPath in $([System.IO.Directory]::GetFiles($naRoot, "*")))
+        ForEach ($artifactPath in $([System.IO.Directory]::GetFiles($naRoot, "*", "AllDirectories")))
         {
             # Skip files that don't include a timestamp in the name
 
