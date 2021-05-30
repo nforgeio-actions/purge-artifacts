@@ -77,8 +77,8 @@ try
             }
         }
 
-        Write-Info "------------------------------"
-        Write-Info "$artifactsPurged artifacts purged"
+        Write-ActionOutput "------------------------------"
+        Write-ActionOutput "$artifactsPurged artifacts purged"
 
         if ($artifactsPurged -gt 0)
         {
