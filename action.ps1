@@ -42,7 +42,10 @@ try
 
     Push-Cwd $naRoot | Out-Null
 
-        Invoke-CaptureStreams "git pull --quiet"
+        Invoke-CaptureStreams "git reset --quiet --hard" | Out-Null
+        Invoke-CaptureStreams "git fetch --quiet" | Out-Null
+        Invoke-CaptureStreams "git checkout --quiet master" | Out-Null    
+        Invoke-CaptureStreams "git pull --quiet" | Out-Null
 
         $retentionDaysPath = [System.IO.Path]::Combine($naRoot, "setting-retention-days")
         $retentionDays     = [int][System.IO.File]::ReadAllText($retentionDaysPath).Trim()
