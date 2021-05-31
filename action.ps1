@@ -42,8 +42,7 @@ try
 
     Push-Cwd $naRoot | Out-Null
 
-        git pull | Out-Null
-        ThrowOnExitCode
+        Invoke-CaptureStreams "git pull --quiet"
 
         $retentionDaysPath = [System.IO.Path]::Combine($naRoot, "setting-retention-days")
         $retentionDays     = [int][System.IO.File]::ReadAllText($retentionDaysPath).Trim()
@@ -82,8 +81,7 @@ try
 
         if ($artifactsPurged -gt 0)
         {
-            git push | Out-Null
-            ThrowOnExitCode
+            Invoke-CaptureStreams "fit push --quiet"
         }
 
     Pop-Cwd | Out-Null
