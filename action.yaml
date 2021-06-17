@@ -8,7 +8,7 @@
 # formal written and signed agreement with neonFORGE, LLC.
 
 #------------------------------------------------------------------------------
-# Clears the runner state including the GITHUB_WORKSPACE directory.
+# Deletes old artifacts from the nforgeio/artifacts repo.
 #
 # NOTE: You must run the [setup-node] action before this to ensure that
 #       Node.js is configured on the runner.
