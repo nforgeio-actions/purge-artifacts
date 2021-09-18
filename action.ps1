@@ -69,7 +69,7 @@ try
 
             $timestring = $filename.SubString(0, 20)        # Extract the "yyyy-MM-ddTHH_mm_ssZ" part
             $timeString = $timeString.Replace("_", ":")     # Convert to: "yyyy-MM-ddTHH:mm:ssZ"
-            $timestamp  = [System.DateTime]::ParseExact($timeString, "yyyy-MM-ddThh:mm:ssZ", $([System.Globalization.CultureInfo]::InvariantCulture)).ToUniversalTime()
+            $timestamp  = [System.DateTime]::ParseExact($timeString, "yyyy-MM-ddTHH:mm:ssZ", $([System.Globalization.CultureInfo]::InvariantCulture)).ToUniversalTime()
 
             if ($timestamp -lt $minRetainTime)
             {
