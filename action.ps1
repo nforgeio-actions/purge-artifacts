@@ -81,7 +81,7 @@ try
 
         if ($artifactsPurged -gt 0)
         {
-            Invoke-CaptureStreams "git push --quiet"
+            $response = Invoke-CaptureStreams "git push --quiet"
         }
 
         Write-ActionOutput "------------------------------"
