@@ -79,13 +79,13 @@ try
             }
         }
 
-        Write-ActionOutput "------------------------------"
-        Write-ActionOutput "$artifactsPurged artifacts purged"
-
         if ($artifactsPurged -gt 0)
         {
-            Invoke-CaptureStreams "fit push --quiet"
+            Invoke-CaptureStreams "git push --quiet"
         }
+
+        Write-ActionOutput "------------------------------"
+        Write-ActionOutput "[$artifactsPurged] artifacts purged"
 
     Pop-Cwd | Out-Null
 }
