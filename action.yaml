@@ -8,13 +8,13 @@
 # formal written and signed agreement with neonFORGE, LLC.
 
 #------------------------------------------------------------------------------
-# Deletes old artifacts from the nforgeio/artifacts repo.
+# Deletes old artifacts from the nforgeio/neon-artifacts repo.
 #
 # NOTE: You must run the [setup-node] action before this to ensure that
 #       Node.js is configured on the runner.
 
 name: purge-artifacts
-description: "Purges old deployment related artifacts"
+description: "Purges old deployment related neon-artifacts"
 runs:
   using: node12
   main: action.js

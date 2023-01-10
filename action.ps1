@@ -35,7 +35,7 @@ try
 {
     # Here's what we're going to do:
     #
-    #   1. Pull the artifacts repo
+    #   1. Pull the neon-artifacts repo
     #   2. Read the [setting-retention-days] file
     #   3. List all of the files in the repo and delete any that are too old
     #   4. Push the repo if we actually deleted anything
@@ -85,7 +85,7 @@ try
         }
 
         Write-ActionOutput "------------------------------"
-        Write-ActionOutput "[$artifactsPurged] artifacts purged"
+        Write-ActionOutput "[$artifactsPurged] neon-artifacts purged"
 
     Pop-Cwd | Out-Null
 }

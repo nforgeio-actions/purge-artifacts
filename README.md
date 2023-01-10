@@ -5,8 +5,8 @@ why this repo is public is because GitHub requires it.
 
 Purges old deployment related artifacts.
 
-This requires that the **nforgeio/artifacts** repo be already checked out on the job runner VMs
-at **%NF_ROOT%\artifacts**.  The action works by:
+This requires that the **nforgeio/neon-artifacts** repo be already checked out on the job runner VMs
+at **%NF_ROOT%\neon-artifacts**.  The action works by:
 
 1. Pulling any remote changes
 2. Reading the integer value from **setting-retentions-days**
